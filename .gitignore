@@ -1,0 +1,23 @@
+# Folders
+research/
+build/
+dist/
+bak/
+.DS_Store/
+*.egg-info/
+
+# File wildcards
+.~lock.*
+*.avi
+*.pdf
+*.*~
+*.doc
+*.pyc
+part*.html
+*.mp4
+*.bak
+*.egg
+distribute*.gz
+
+# Single Files
+.coverage
