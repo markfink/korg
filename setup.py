@@ -3,37 +3,25 @@
 
 import re
 import os
-import distribute_setup
-distribute_setup.use_setuptools()
-
-try:
-    from setuptools import setup, find_packages
-    have_setuptools = True
-except ImportError:
-    from distutils.core import setup
-    def find_packages():
-        return [
-            'korg',
-        ]
-    have_setuptools = False
+from distutils.core import setup
 
 def find_pattern_files():
-    return [os.path.join('patterns', file) for file in os.listdir('patterns')
-        if re.match(r'^[\w-]+$', file)]
-
-requires = ['regex>=2013-06-05']
+   return [os.path.join('patterns', file) for file in os.listdir('patterns')
+       if re.match(r'^[\w-]+$', file)]
 
 setup(
     author='Mark Fink',
     author_email='mark@mark-fink.de',
     description='Fast logfile parsing. This is a port of Ruby logstash / grok to Python',
+    long_description=open('README.md').read(),
     url='https://github.com/aogaeru/korg',
     download_url='http://pypi.python.org/pypi/korg',
     name='korg',
     version='0.0.1',
-    packages=find_packages(),
+    packages=['korg'],
+    data_files=[('patterns', find_pattern_files()), 'README.md'],
     license='MIT License',
-    long_description=open('README.md').read(),
+    install_requires=['regex>=2013-06-05'],
     scripts=[],
     platforms='any',
     classifiers=[
@@ -47,5 +35,4 @@ setup(
         'Topic :: System :: Systems Administration',
         'Natural Language :: English',
     ],
-    data_files=[('patterns', find_pattern_files())]
 )
