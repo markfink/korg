@@ -2,7 +2,7 @@ from nose.tools import istest as test
 from nose.tools import nottest
 from pyvows import Vows, expect
 from korg.korg import LineGrokker
-from korg.pattern import load_patterns
+from korg.pattern import PatternRepo
 
 # test samples taken from logstash/spec/filters/grok.rb v1.1.13
 
@@ -20,9 +20,8 @@ def not_has_element(topic, expected):
 
 @test
 def it_groks_simple_syslog_line():
-
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('%{SYSLOGLINE}', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('%{SYSLOGLINE}', pr)
 
     subject = g.grok('Mar 16 00:01:25 evita postfix/smtpd[1713]: connect from camomile.cloud9.net[168.100.1.3]')
 
@@ -37,9 +36,8 @@ def it_groks_simple_syslog_line():
 
 @test
 def it_groks_ietf_5424_syslog_line():
-
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('%{SYSLOG5424LINE}', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('%{SYSLOG5424LINE}', pr)
 
     subject = g.grok('<191>1 2009-06-30T18:30:00+02:00 paxton.local grokdebug 4123 - [id1 foo=\"bar\"][id2 baz=\"something\"] Hello, syslog.')
 
@@ -151,8 +149,8 @@ def it_groks_ietf_5424_syslog_line():
 @nottest
 def it_drops_empty_fields_by_default():
     # not implemented
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('1=%{WORD:foo1} *(2=%{WORD:foo2})?', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('1=%{WORD:foo1} *(2=%{WORD:foo2})?', pr)
 
     subject = g.grok('1=test')
 
@@ -163,9 +161,8 @@ def it_drops_empty_fields_by_default():
 
 @test
 def it_keep_empty_fields():
-    # not implemented
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('1=%{WORD:foo1} *(2=%{WORD:foo2})?', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('1=%{WORD:foo1} *(2=%{WORD:foo2})?', pr)
 
     subject = g.grok('1=test')
 
@@ -198,8 +195,8 @@ def it_keep_empty_fields():
 
 @test
 def it_uses_named_captures():
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('(?<foo>\w+)', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('(?<foo>\w+)', pr)
 
     subject = g.grok('hello world')
 
@@ -209,8 +206,8 @@ def it_uses_named_captures():
 
 @test
 def it_groks_patterns():
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('(?<timestamp>%{DATE_EU} %{TIME})', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('(?<timestamp>%{DATE_EU} %{TIME})', pr)
 
     subject = g.grok('fancy 2001-02-03 04:05:06')
 
@@ -277,8 +274,8 @@ end
 
 @test
 def it_captures_named_fields_even_if_the_whole_text_matches():
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('%{DATE_EU:stimestamp}', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('%{DATE_EU:stimestamp}', pr)
 
     subject = g.grok('2011/01/01')
 
@@ -288,8 +285,8 @@ def it_captures_named_fields_even_if_the_whole_text_matches():
 @nottest
 def it_allows_dashes_in_capture_names():
     # not implemented
-    pm = load_patterns(['patterns/'])
-    g = LineGrokker('%{WORD:foo-bar}', pm)
+    pr = PatternRepo(['patterns/'])
+    g = LineGrokker('%{WORD:foo-bar}', pr)
 
     subject = g.grok('hello world')
 
