@@ -26,7 +26,6 @@ class PatternRepo(object):
                         repl = self.pattern_dict[md['patname']]
                     # print "Replacing %s with %s"  %(md['substr'], repl)
                     pattern = pattern.replace(md['substr'],repl)
-
         return regex.compile(pattern)
 
 
@@ -43,6 +42,7 @@ class PatternRepo(object):
 
     def _load_patterns(self, folders, pattern_dict={}):
         """Load all pattern from all the files in folders"""
+        # print 'folders: %s' % folders
         for folder in folders:
             for file in os.listdir(folder):
                 if regex.match(r'^[\w-]+$', file):
