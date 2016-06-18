@@ -2,7 +2,7 @@
 
 [![License](http://img.shields.io/badge/license-MIT-yellowgreen.svg)](MIT_LICENSE)
 
-This is was part of the kaeru project (https://github.com/kaeru-repo/plot)
+This is was part of the kaeru project (https://github.com/kaeru-repo/korg)
 The kaeru project is now obsolete so we moved the korg tool here.
 
 
