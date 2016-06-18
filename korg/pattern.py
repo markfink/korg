@@ -35,6 +35,10 @@ class PatternRepo(object):
                         repl = self.pattern_dict[md['patname']]
                     # print "Replacing %s with %s"  %(md['substr'], repl)
                     pattern = pattern.replace(md['substr'],repl)
+                else:
+                    # pattern 'patname' not found!
+                    # maybe missing path entry or missing pattern file?
+                    return
         # print 'pattern: %s' % pattern
         return regex.compile(pattern, flags)
 
@@ -42,7 +46,9 @@ class PatternRepo(object):
     def _load_pattern_file(self, filename, pattern_dict):
         pattern_re = regex.compile("^(?P<patname>\w+) (?P<pattern>.+)$")
         with open(filename) as f:
-            lines = f.readlines()
+            # acc to Max this should be "lines = f.read().splitlines()"
+            # because of some \r\n line breaks running with POSIX
+            lines = f.readlines() 
         for line in lines:
             m = pattern_re.search(line)
             if m:
@@ -58,7 +64,3 @@ class PatternRepo(object):
                 if regex.match(r'^[\w-]+$', file):
                     self._load_pattern_file(os.path.join(folder, file), pattern_dict)
         return pattern_dict
-
-
-if __name__ == '__main__':
-    print load_patterns(['../patterns'])

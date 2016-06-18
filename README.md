@@ -1,5 +1,12 @@
-Why a logstash / grok port to Python?
-=====================================
+# KORG
+
+[![License](http://img.shields.io/badge/license-MIT-yellowgreen.svg)](MIT_LICENSE)
+
+This is was part of the kaeru project (https://github.com/kaeru-repo/plot)
+The kaeru project is now obsolete so we moved the korg tool here.
+
+
+## Why a logstash / grok port to Python?
 
 I am not much into Ruby but I like the logstash approach to logfile parsing. So I want to use this in Python.
 
@@ -11,8 +18,7 @@ One solution would be to use the C version of logstash / grok (https://github.co
 Basically grok assembles regular expressions. I already know that in Python file processing with regular expressions is blazingly fast so I choose to port it to Python. Since a grok package already exists in Python for something completely different I had to reverse engineer it. Thus the name korg.
 
 
-Status
-======
+## Status
 
 * Base functionality is implemented including tests
 * Logstash patterns are included
@@ -52,8 +58,7 @@ I made some first benchmarks to verify whether my performance requirements can b
 Note: both implementations read in all available patterns from the 'patterns' folder.
 
 
-Resources
-=========
+## Resources
 
 * http://jpmens.net/2012/08/06/my-logstash-and-graylog2-notes/
 * http://grokdebug.herokuapp.com/

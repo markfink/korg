@@ -5,6 +5,8 @@ dist/
 bak/
 .DS_Store/
 *.egg-info/
+venv/
+venv3/
 
 # File wildcards
 .~lock.*

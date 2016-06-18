@@ -4,9 +4,10 @@ from pyvows import Vows, expect
 from korg.korg import LineGrokker
 from korg.pattern import PatternRepo
 
-# test samples taken from logstash/spec/filters/grok.rb v1.1.13
+# TODO testcases
+#
 
-
+# test helpers
 @Vows.create_assertions
 def has_element(topic, expected):
     return expected in topic
@@ -16,43 +17,13 @@ def not_has_element(topic, expected):
     return not(expected in topic)
 
 
-# describe korg
-
-@test
-def it_groks_simple_syslog_line():
-    pr = PatternRepo(['patterns/'])
-    g = LineGrokker('%{SYSLOGLINE}', pr)
-
-    subject = g.grok('Mar 16 00:01:25 evita postfix/smtpd[1713]: connect from camomile.cloud9.net[168.100.1.3]')
-
-    print 'subject: %s' % subject
-    expect(subject["logsource"]).to_equal("evita")
-    expect(subject["timestamp"]).to_equal("Mar 16 00:01:25")
-    expect(subject["message"]).to_equal("connect from camomile.cloud9.net[168.100.1.3]")
-    expect(subject["program"]).to_equal("postfix/smtpd")
-    expect(subject["pid"]).to_equal("1713")
-
-    #  reject { subject["@tags"] }.include?("_grokparsefailure")
-
-@test
-def it_groks_ietf_5424_syslog_line():
-    pr = PatternRepo(['patterns/'])
-    g = LineGrokker('%{SYSLOG5424LINE}', pr)
-
-    subject = g.grok('<191>1 2009-06-30T18:30:00+02:00 paxton.local grokdebug 4123 - [id1 foo=\"bar\"][id2 baz=\"something\"] Hello, syslog.')
-
-    print 'subject: %s' % subject
-    expect(subject["syslog5424_pri"]).to_equal("<191>")
-    expect(subject["syslog5424_ver"]).to_equal("1")
-    expect(subject["syslog5424_ts"]).to_equal("2009-06-30T18:30:00+02:00")
-    expect(subject["syslog5424_host"]).to_equal("paxton.local")
-    expect(subject["syslog5424_app"]).to_equal("grokdebug")
-    expect(subject["syslog5424_proc"]).to_equal("4123")
-    expect(subject["syslog5424_msgid"]).to_equal(None)
-    expect(subject["syslog5424_sd"]).to_equal("[id1 foo=\"bar\"][id2 baz=\"something\"]")
-    expect(subject["syslog5424_msg"]).to_equal("Hello, syslog.")
+def test_pattern_not_found():
+    pr = PatternRepo([], True)
+    lg = LineGrokker('%{UNKNOWN}', pr)
+    assert lg.regex == None
 
 
+# test samples taken from logstash/spec/filters/grok.rb v1.1.13
 """
   describe "parsing an event with multiple messages (array of strings)" do
     config <<-CONFIG
@@ -212,7 +183,7 @@ def it_groks_patterns():
     subject = g.grok('fancy 2001-02-03 04:05:06')
 
     print 'subject: %s' % subject
-    expect(subject["timestamp"]).to_equal("2001-02-03 04:05:06")
+    expect(subject["timestamp"]).to_equal("01-02-03 04:05:06")
 
 
 """
@@ -280,10 +251,10 @@ def it_captures_named_fields_even_if_the_whole_text_matches():
     subject = g.grok('2011/01/01')
 
     print 'subject: %s' % subject
-    expect(subject["stimestamp"]).to_equal("2011/01/01")
+    expect(subject["stimestamp"]).to_equal("11/01/01")
 
 @nottest
-def it_allows_dashes_in_capture_names():
+def test_allows_dashes_in_capture_names():
     # not implemented
     pr = PatternRepo(['patterns/'])
     g = LineGrokker('%{WORD:foo-bar}', pr)
