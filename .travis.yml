@@ -7,8 +7,9 @@ before_install:
  - sudo apt-get update -qq
 install:
     - pip install .
+    - pip install pyvows
     - pip install nose-cov
-script: nosetests -sv --with-coverage --cover-package=korg
+script: nosetests -s --with-coverage --cover-package=korg
 # after_success:
 #   # Report coverage results to coveralls.io
 #   - pip install coveralls
