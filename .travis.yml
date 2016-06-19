@@ -1,0 +1,15 @@
+language: python
+python:
+    - "2.7"
+    # - "3.3"
+    # - "3.4"
+before_install:
+ - sudo apt-get update -qq
+install:
+    - pip install .
+    - pip install nose-cov
+script: nosetests -sv --with-coverage --cover-package=korg
+# after_success:
+#   # Report coverage results to coveralls.io
+#   - pip install coveralls
+#   - coveralls

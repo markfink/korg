@@ -1,5 +1,6 @@
 # KORG
 
+[![Build Status](https://travis-ci.org/finklabs/korg.svg?branch=master)](https://travis-ci.org/finklabs/korg)
 [![License](http://img.shields.io/badge/license-MIT-yellowgreen.svg)](MIT_LICENSE)
 
 This is was part of the kaeru project (https://github.com/kaeru-repo/korg)
