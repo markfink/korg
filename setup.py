@@ -40,9 +40,9 @@ setup(
     description='Fast logfile parsing. This is a port of Ruby logstash / grok to Python',
     long_description=pypi_desc,
     name='korg',
-    version='0.0.5',
+    version='0.0.6',
     packages=['korg'],
-    data_files=[('patterns', find_pattern_files()), 'README.md'],
+    data_files=[('patterns', find_pattern_files())],
     install_requires=['regex >= 2013-06-05'],
     license='MIT License',
     classifiers=[

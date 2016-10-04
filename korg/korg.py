@@ -33,7 +33,7 @@ def parse_lines(log_parsers, fileinp):
 
         processed = False
         for lp in log_parsers:
-            if lp.parse(logentry):
+            if lp.grok(logentry):
                 processed = True
         if not processed:
             # error: none of the logparsers worked on the line
