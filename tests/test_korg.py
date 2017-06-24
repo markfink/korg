@@ -1,20 +1,9 @@
-from nose.tools import istest as test
-from nose.tools import nottest
-from pyvows import Vows, expect
-from korg.korg import LineGrokker
-from korg.pattern import PatternRepo
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals, print_function
+from korg import LineGrokker, PatternRepo
 
 # TODO testcases
 #
-
-# test helpers
-@Vows.create_assertions
-def has_element(topic, expected):
-    return expected in topic
-
-@Vows.create_assertions
-def not_has_element(topic, expected):
-    return not(expected in topic)
 
 
 def test_pattern_not_found():
@@ -117,7 +106,7 @@ def test_pattern_not_found():
 
 # empty fields
 
-@nottest
+'''
 def it_drops_empty_fields_by_default():
     # not implemented
     pr = PatternRepo(['patterns/'])
@@ -128,19 +117,20 @@ def it_drops_empty_fields_by_default():
     expect(subject).has_element("foo1")
     # Since 'foo2' was not captured, it must not be present in the event.
     expect(subject).not_has_element("foo2")
+'''
 
 
-@test
-def it_keep_empty_fields():
+def test_keep_empty_fields():
     pr = PatternRepo(['patterns/'])
     g = LineGrokker('1=%{WORD:foo1} *(2=%{WORD:foo2})?', pr)
 
     subject = g.grok('1=test')
 
-    expect(subject).has_element("foo1")
+    assert 'foo1' in subject
     # Since 'foo2' was not captured, it must not be present in the event.
-    expect(subject).has_element("foo2")
-    expect(subject["foo2"]).to_equal(None)
+    assert 'foo2' in subject
+    assert subject['foo2'] is None
+
 
 """
   describe "when named_captures_only == false" do
@@ -164,26 +154,24 @@ def it_keep_empty_fields():
 """
 
 
-@test
-def it_uses_named_captures():
+def test_uses_named_captures():
     pr = PatternRepo(['patterns/'])
     g = LineGrokker('(?<foo>\w+)', pr)
 
     subject = g.grok('hello world')
 
-    print 'subject: %s' % subject
-    expect(subject["foo"]).to_equal("hello")
+    print('subject: %s' % subject)
+    assert subject['foo'] == 'hello'
 
 
-@test
-def it_groks_patterns():
+def test_groks_patterns():
     pr = PatternRepo(['patterns/'])
     g = LineGrokker('(?<timestamp>%{DATE_EU} %{TIME})', pr)
 
     subject = g.grok('fancy 2001-02-03 04:05:06')
 
-    print 'subject: %s' % subject
-    expect(subject["timestamp"]).to_equal("01-02-03 04:05:06")
+    print('subject: %s' % subject)
+    assert subject["timestamp"] == "01-02-03 04:05:06"
 
 
 """
@@ -243,17 +231,18 @@ def it_groks_patterns():
 end
 """
 
-@test
-def it_captures_named_fields_even_if_the_whole_text_matches():
+
+def test_captures_named_fields_even_if_the_whole_text_matches():
     pr = PatternRepo(['patterns/'])
     g = LineGrokker('%{DATE_EU:stimestamp}', pr)
 
     subject = g.grok('2011/01/01')
 
-    print 'subject: %s' % subject
-    expect(subject["stimestamp"]).to_equal("11/01/01")
+    print('subject: %s' % subject)
+    assert subject["stimestamp"] == "11/01/01"
 
-@nottest
+
+'''
 def test_allows_dashes_in_capture_names():
     # not implemented
     pr = PatternRepo(['patterns/'])
@@ -263,3 +252,4 @@ def test_allows_dashes_in_capture_names():
 
     print 'subject: %s' % subject
     expect(subject["foo-bar"]).to_equal("hello")
+'''

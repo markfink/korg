@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from korg.korg import LineGrokker
-from korg.pattern import PatternRepo
+from __future__ import unicode_literals, print_function
+from korg import LineGrokker, PatternRepo
 
 
 pr = PatternRepo([], True)

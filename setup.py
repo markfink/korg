@@ -1,59 +1,61 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import re
+from setuptools import setup, find_packages
+from codecs import open
 import os
-from setuptools import setup
+import re
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+# Get the long description from the README file
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', format='md', to='rst')
+    long_description = long_description.replace('\r', '')  # YOU  NEED THIS LINE
+except(IOError, ImportError):
+    with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
+
+# get the dependencies and installs
+with open(os.path.join(here, 'requirements.txt'), encoding='utf-8') as f:
+    all_reqs = f.read().split('\n')
 
 
-pypi_desc = '''
-Why a logstash / grok port to Python?
-=====================================
+install_requires = [x.strip() for x in all_reqs if ('git+' not in x) and
+                    (not x.startswith('#')) and (not x.startswith('-'))]
+dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' not in x]
 
-I am not much into Ruby but I like the logstash approach to logfile parsing. So I want to use this in Python.
-
-One solution would be to use the C version of logstash / grok (https://github.com/jordansissel/grok) and to write a wrapper:
-
-* https://github.com/kiwi0530/python-grok
-* https://github.com/emgee/libgrok-py
-
-Basically grok assembles regular expressions. I already know that in Python file processing with regular expressions is blazingly fast so I choose to port it to Python. Since a grok package already exists in Python for something completely different I had to reverse engineer it. Thus **the name korg**.
-
-
-Status
-======
-
-* Base functionality is implemented including tests
-* Logstash patterns are included
-* Some grok features are still missing (not sure which ones are really necessary)
-
-I made some first benchmarks to verify whether my performance requirements can be realized with this approach. Please do not use this results in any blog posts or articles since this is not a complete benchmark (from a statistical view point the sample size is way too small).
-'''
 
 def find_pattern_files():
     return [os.path.join('patterns', file) for file in os.listdir('patterns')
-        if re.match(r'^[\w-]+$', file)]
+            if re.match(r'^[\w-]+$', file)]
+
 
 setup(
-    url='http://www.finklabs.org/',
-    author='Mark Fink',
-    author_email='mark@finklabs.de',
-    description='Fast logfile parsing. This is a port of Ruby logstash / grok to Python',
-    long_description=pypi_desc,
     name='korg',
     version='0.0.6',
-    packages=['korg'],
-    data_files=[('patterns', find_pattern_files())],
-    install_requires=['regex >= 2013-06-05'],
-    license='MIT License',
+    description='Fast logfile parsing. This is a port of Ruby logstash / grok to Python',
+    long_description=long_description,
+    license='MIT',
+    url='https://github.com/finklabs/korg',
     classifiers=[
-        'License :: OSI Approved :: MIT License',
-        'Intended Audience :: Developers',
-        'Intended Audience :: System Administrators',
-        'Development Status :: 3 - Alpha',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Operating System :: OS Independent',
-        'Topic :: System :: Systems Administration',
         'Natural Language :: English',
+        'Intended Audience :: Developers',
+        'Environment :: Console',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.6',
     ],
+    keywords='',
+    packages=find_packages(exclude=['docs', 'tests*', 'patterns']),
+    data_files=[('patterns', find_pattern_files())],
+    include_package_data=True,
+    author='glomex SRE Team',
+    install_requires=install_requires,
+    dependency_links=dependency_links,
+    author_email='mark.fink@glomex.com',
+    entry_points={
+        'gcdt10': [
+            'bundler=gcdt_bundler.bundler',
+        ],
+    }
 )

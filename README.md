@@ -3,20 +3,29 @@
 [![Build Status](https://travis-ci.org/finklabs/korg.svg?branch=master)](https://travis-ci.org/finklabs/korg)
 [![License](http://img.shields.io/badge/license-MIT-yellowgreen.svg)](MIT_LICENSE)
 
-This is was part of the kaeru project (https://github.com/kaeru-repo/korg)
-The kaeru project is now obsolete so we moved the korg tool here.
-
 
 ## Why a logstash / grok port to Python?
 
-I am not much into Ruby but I like the logstash approach to logfile parsing. So I want to use this in Python.
+I like the logstash `grok` approach to logfile parsing. So I want to use this in Python.
 
 One solution would be to use the C version of logstash / grok (https://github.com/jordansissel/grok) and to write a wrapper:
 
 * https://github.com/kiwi0530/python-grok
 * https://github.com/emgee/libgrok-py
 
-Basically grok assembles regular expressions. I already know that in Python file processing with regular expressions is blazingly fast so I choose to port it to Python. Since a grok package already exists in Python for something completely different I had to reverse engineer it. Thus the name korg.
+Basically grok assembles regular expressions. I already know that in Python file processing with regular expressions is blazingly fast so I choose to port it to Python. 
+
+Unfortunately a `grok` package already existed in Python for something completely different - consequently I had to "reverse-engineer" it. Thus the name `korg`.
+
+The pattern files are updated from the logstash grok project:
+https://github.com/logstash-plugins/logstash-patterns-core
+
+A big thank you belongs to the logstash community for an awesome job maintaining the regex pattern files! 
+
+
+## Examples using korg
+
+* extracting metrics from logfiles: https://github.com/finklabs/loganalyser
 
 
 ## Status

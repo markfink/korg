@@ -20,6 +20,7 @@ part*.html
 *.bak
 *.egg
 distribute*.gz
+*.iml
 
 # Single Files
 .coverage

@@ -1,9 +1,8 @@
-import sys
-import regex  # compared to re this implements the full regex spec like atomic grouping
-from pattern import PatternRepo
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals, print_function
+import logging
 
 
-# TODO: can't say if this is a useful interface. Please provide feedback if you have any thoughts.
 # I use it in this way in my loganalyser
 class LineGrokker(object):
     def __init__(self, pattern, pattern_repo, flags=0, callbacks=[], entries=None):
@@ -41,5 +40,5 @@ def parse_lines(log_parsers, fileinp):
             logger.warning(
                 #'Could not parse line %s, in file %s >>>%s<<<',
                 #fileinp.lineno(), fileinp.filename(), line.rstrip())
-                'Could not parse line >>>%s<<<', line.rstrip())
-            print 'Could not parse line >>>%s<<<' % line.rstrip()
+                'Could not parse line >>>%s<<<', logentry.rstrip())
+            print('Could not parse line >>>%s<<<' % logentry.rstrip())

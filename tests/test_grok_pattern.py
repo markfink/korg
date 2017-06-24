@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from korg.korg import LineGrokker
-from korg.pattern import PatternRepo
+from __future__ import unicode_literals, print_function
+from korg import LineGrokker, PatternRepo
 
 
 pr = PatternRepo([], True)
@@ -137,6 +137,7 @@ def test_urn_valid():
     assert lg.grok("urn:example:%25foo%2fbar%3f%23") is not None
     assert lg.grok("urn:example:%00") is not None
     assert lg.grok("urn:example-example-example-example-:foo") is not None
+
 
 def test_urn_invalid():
     lg = LineGrokker('%{URN}', pr)
