@@ -3,7 +3,7 @@ from __future__ import unicode_literals, print_function
 from korg import LineGrokker, PatternRepo
 
 
-pr = PatternRepo([], True)
+pr = PatternRepo()
 
 
 def test_firewalls_CISCOFW104001():

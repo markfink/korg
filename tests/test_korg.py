@@ -2,14 +2,11 @@
 from __future__ import unicode_literals, print_function
 from korg import LineGrokker, PatternRepo
 
-# TODO testcases
-#
-
 
 def test_pattern_not_found():
-    pr = PatternRepo([], True)
+    pr = PatternRepo()
     lg = LineGrokker('%{UNKNOWN}', pr)
-    assert lg.regex == None
+    assert lg.regex is None
 
 
 # test samples taken from logstash/spec/filters/grok.rb v1.1.13
@@ -121,13 +118,13 @@ def it_drops_empty_fields_by_default():
 
 
 def test_keep_empty_fields():
-    pr = PatternRepo(['patterns/'])
+    pr = PatternRepo()
     g = LineGrokker('1=%{WORD:foo1} *(2=%{WORD:foo2})?', pr)
 
     subject = g.grok('1=test')
 
     assert 'foo1' in subject
-    # Since 'foo2' was not captured, it must not be present in the event.
+    # Since 'foo2' was not captured, it still must be present
     assert 'foo2' in subject
     assert subject['foo2'] is None
 
@@ -155,7 +152,7 @@ def test_keep_empty_fields():
 
 
 def test_uses_named_captures():
-    pr = PatternRepo(['patterns/'])
+    pr = PatternRepo()
     g = LineGrokker('(?<foo>\w+)', pr)
 
     subject = g.grok('hello world')
@@ -165,7 +162,7 @@ def test_uses_named_captures():
 
 
 def test_groks_patterns():
-    pr = PatternRepo(['patterns/'])
+    pr = PatternRepo()
     g = LineGrokker('(?<timestamp>%{DATE_EU} %{TIME})', pr)
 
     subject = g.grok('fancy 2001-02-03 04:05:06')
@@ -233,8 +230,8 @@ end
 
 
 def test_captures_named_fields_even_if_the_whole_text_matches():
-    pr = PatternRepo(['patterns/'])
-    g = LineGrokker('%{DATE_EU:stimestamp}', pr)
+    pr = PatternRepo()
+    g = LineGrokker(u'%{DATE_EU:stimestamp}', pr)
 
     subject = g.grok('2011/01/01')
 
