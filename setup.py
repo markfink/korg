@@ -32,7 +32,7 @@ def find_pattern_files():
 
 setup(
     name='korg',
-    version='0.0.6',
+    version='0.0.7',
     description='Fast logfile parsing. This is a port of Ruby logstash / grok to Python',
     long_description=long_description,
     license='MIT',
