@@ -6,7 +6,7 @@ before_install:
  - sudo apt-get update -qq
 install:
     - pip install .
-    - pip install -r requirmeents_dev.txt
+    - pip install -r requirements_dev.txt
 script: python -m pytest -vv --cov-report term-missing --cov korg tests/test_*
 # after_success:
 #   # Report coverage results to coveralls.io
