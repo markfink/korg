@@ -1,3 +1,4 @@
+include korg/patterns/*
 include MIT_LICENSE
 include README.md
 include CHANGELOG.md
