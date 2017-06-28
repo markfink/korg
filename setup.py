@@ -25,9 +25,9 @@ install_requires = [x.strip() for x in all_reqs if ('git+' not in x) and
 dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' not in x]
 
 
-def find_pattern_files():
-    return [os.path.join('patterns', file) for file in os.listdir('patterns')
-            if re.match(r'^[\w-]+$', file)]
+#def find_pattern_files():
+#    return [os.path.join('patterns', file) for file in os.listdir('patterns')
+#            if re.match(r'^[\w-]+$', file)]
 
 
 setup(
@@ -47,7 +47,7 @@ setup(
     ],
     keywords='',
     packages=find_packages(exclude=['docs', 'tests*', 'patterns']),
-    data_files=[('patterns', find_pattern_files())],
+    #data_files=[('patterns', find_pattern_files())],
     include_package_data=True,
     author='glomex SRE Team',
     install_requires=install_requires,

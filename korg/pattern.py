@@ -17,7 +17,7 @@ class PatternRepo(object):
         if pattern_dict:
             self.pattern_dict = pattern_dict
         if import_korg_patterns:
-            folders.append(here('../patterns'))
+            folders.append(here('./patterns'))
         self._load_patterns(folders, self.pattern_dict)
         if patterns:
             d = '\n'
