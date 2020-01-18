@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 from codecs import open
 import os
-import re
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -31,20 +29,18 @@ setup(
     description='Fast logfile parsing. This is a port of Ruby logstash / grok to Python',
     long_description=long_description,
     license='MIT',
-    url='https://github.com/finklabs/korg',
+    url='https://github.com/markfink/korg',
     classifiers=[
         'Natural Language :: English',
         'Intended Audience :: Developers',
         'Environment :: Console',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6',
     ],
     keywords='',
     packages=find_packages(exclude=['docs', 'tests*', 'patterns']),
     include_package_data=True,
-    author='glomex SRE Team',
+    author='Mark Fink',
     install_requires=install_requires,
     dependency_links=dependency_links,
-    author_email='mark.fink@glomex.com',
 )

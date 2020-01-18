@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function
-# compared to re this implements the full regex spec like atomic grouping
-import regex
+import regex  # compared to re this implements the full regex spec like atomic grouping
 import os
 import codecs
 

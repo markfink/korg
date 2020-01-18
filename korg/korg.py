@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function
-import logging
+from logging import getLogger
+
+log = getLogger(__name__)
 
 
-# I use it in this way in my loganalyser
 class LineGrokker(object):
     def __init__(self, pattern, pattern_repo, flags=0, callbacks=[], entries=None):
         self.regex = pattern_repo.compile_regex(pattern, flags)
@@ -19,7 +18,6 @@ class LineGrokker(object):
             return gd
 
 
-# this is how a sample parser (from https://github.com/kaeru-repo/plot)
 # TODO: this needs testing and some docu!
 def parse_lines(log_parsers, fileinp):
     """parse lines from the fileinput and send them to the log_parsers"""
@@ -36,9 +34,9 @@ def parse_lines(log_parsers, fileinp):
                 processed = True
         if not processed:
             # error: none of the logparsers worked on the line
-            logger = logging.getLogger('logparser')
-            logger.warning(
+            #logger = logging.getLogger('logparser')
+            log.warning(
                 #'Could not parse line %s, in file %s >>>%s<<<',
                 #fileinp.lineno(), fileinp.filename(), line.rstrip())
                 'Could not parse line >>>%s<<<', logentry.rstrip())
-            print('Could not parse line >>>%s<<<' % logentry.rstrip())
+            log.error('Could not parse line >>>%s<<<' % logentry.rstrip())
