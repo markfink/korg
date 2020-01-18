@@ -20,7 +20,7 @@ Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ...
 
 Usually I start by putting a sample log line into [Grok Debugger](https://grokdebug.herokuapp.com/) and develop the pattern by using the logstash patterns (like what you would do using ruby logstash). Grok patterns are structured like this: %{NAME:IDENTIFIER}. NAME is the name of the logstash pattern you want to use, IDENTIFIER is the identifier you are giving to the matched text.
 
-![webserver log pattern](https://raw.githubusercontent.com/markfink/korg/master/docs/media/grok_debugger.png?sanitize=true)
+![webserver log pattern](https://raw.githubusercontent.com/markfink/korg/master/docs/media/grok_debugger.png)
 
 Once the pattern works (should try out other log lines, too) we can automate this using korg.
 
