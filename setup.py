@@ -25,7 +25,7 @@ dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' no
 
 setup(
     name='korg',
-    version='0.0.11',
+    version='1.0.0',
     description='Fast logfile parsing. This is a port of Ruby logstash / grok to Python',
     long_description=long_description,
     license='MIT',
